@@ -17,4 +17,15 @@
     <string name="kubat_abdullaev" />
     <string name="Kubat_Abdullaev" />
     <string name="action_exit" />
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <integer-array name="img_id_arr">
+        <item>@drawable/first_point</item>
+        <item>@drawable/second_point</item>
+        <item>@drawable/first_point</item>
+
+    </integer-array>
+
 </resources>
+
