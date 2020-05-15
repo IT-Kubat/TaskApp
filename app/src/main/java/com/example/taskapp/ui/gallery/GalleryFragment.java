@@ -1,6 +1,7 @@
 package com.example.taskapp.ui.gallery;
 
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.taskapp.R;
+
+import java.io.File;
 
 public class GalleryFragment extends Fragment {
 
@@ -31,5 +34,10 @@ public class GalleryFragment extends Fragment {
             }
         });
         return root;
+    }
+
+    private void getFiles(){
+        File folder = new File(Environment.getExternalStorageDirectory(), "TaskApp");
+        if (!folder.exists()) folder.mkdir();
     }
 }
