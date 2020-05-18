@@ -11,19 +11,27 @@
         android:id="@+id/editTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/EditTextStyle"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:hint="Task"/>
 
     <EditText
         android:id="@+id/editDesc"
+        style="@style/EditTextStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:hint="Description"/>
     <Button
         android:id="@+id/btn_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_rounded"
+        android:background="@drawable/button_rounded_gradient"
         android:textColor="@color/colorBlue"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:text="Save"
         android:onClick="onClick"/>
 

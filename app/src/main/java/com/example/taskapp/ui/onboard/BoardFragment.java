@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.taskapp.MainActivity;
 import com.example.taskapp.R;
 
@@ -43,6 +45,7 @@ import static com.example.taskapp.R.id.*;
 public class BoardFragment extends Fragment {
     Button btnStart, btnSkip;
     LinearLayout fragmentBoard;
+    LottieAnimationView lottie1,lottie2,lottie3;
 
     public BoardFragment() {
         // Required empty public constructor
@@ -65,7 +68,10 @@ public class BoardFragment extends Fragment {
         btnStart = view.findViewById(R.id.btnStart);
         ContextCompat.getColor(getContext(), R.color.colorGrey);
         btnSkip = view.findViewById(R.id.btnSkip);
-        LinearLayout linearLayout = view.findViewById(R.id.fragment_board);
+        lottie1 = view.findViewById(our_work);
+        lottie2 = view.findViewById(stay_home);
+        lottie3 = view.findViewById(cute_bird);
+        ConstraintLayout linearLayout = view.findViewById(R.id.fragment_board);
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,19 +92,25 @@ public class BoardFragment extends Fragment {
             case 0:
                 linearLayout.setBackgroundColor(getResources().getColor(R.color.colorBlue));
                 btnStart.setVisibility(View.INVISIBLE);
-                imageView.setImageResource(R.drawable.foto2);
+                lottie1.setVisibility(View.VISIBLE);
+                lottie2.setVisibility(View.INVISIBLE);
+                lottie3.setVisibility(View.INVISIBLE);
                 textTitle.setText("Hello, my friend!");
                 break;
             case 1:
                 linearLayout.setBackgroundColor(getResources().getColor(R.color.colorGrey));
                 btnStart.setVisibility(View.INVISIBLE);
-                imageView.setImageResource(R.drawable.logo1);
+                lottie2.setVisibility(View.VISIBLE);
+                lottie1.setVisibility(View.INVISIBLE);
+                lottie3.setVisibility(View.INVISIBLE);
                 textTitle.setText("How are you?");
                 break;
             case 2:
                 linearLayout.setBackgroundColor(getResources().getColor(R.color.colorBlack));
                 btnStart.setVisibility(View.VISIBLE);
-                imageView.setImageResource(R.drawable.logo_gt);
+                lottie2.setVisibility(View.INVISIBLE);
+                lottie1.setVisibility(View.INVISIBLE);
+                lottie3.setVisibility(View.VISIBLE);
                 textTitle.setText("What are doing?");
                 break;
         }

@@ -24,38 +24,54 @@ import com.example.taskapp.ui.OnItemClickListener;
 import com.example.taskapp.ui.models.Task;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class HomeFragment extends Fragment implements IOnItemClickListener {
+public class HomeFragment extends Fragment {
 
-    private TaskAdapter adapter;
-    private ArrayList<Task> list = new ArrayList<>();
-    int pos;
+    private static TaskAdapter adapter;
+    private static ArrayList<Task> list = new ArrayList<>();
+    private static List<Task> sortedList;
+    private static List<Task> list1;
+    private static List<Task> notSortedList;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+//        App.getDatabase().taskDao().getSortedList().observe(getActivity(), new Observer<List<Task>>() {
+//            @Override
+//            public void onChanged(List<Task> tasks) {
+//                sortedList = tasks;
+//            }
+//        });
 
         return inflater.inflate(R.layout.fragment_home, container, false);
+
 
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new TaskAdapter(list);
-//        list.addAll(App.getInstance().getDatabase().taskDao().getAll());
+
+
+
+
         adapter.setOnItemClickListener(new OnItemClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onItemClick(int pos) {
-                pos = pos;
                 Intent intent = new Intent(getActivity(), FormActivity.class);
                 intent.putExtra("task", list.get(pos));
                 Objects.requireNonNull(getActivity()).startActivityForResult(intent, 42);
+                App.getDatabase().taskDao().delete(list.get(pos));
             }
 
             @Override
@@ -81,6 +97,8 @@ public class HomeFragment extends Fragment implements IOnItemClickListener {
         loadData();
     }
 
+
+
     public void loadData() {
         App.getInstance()
                 .getDatabase()
@@ -89,68 +107,36 @@ public class HomeFragment extends Fragment implements IOnItemClickListener {
                 .observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
                     @Override
                     public void onChanged(List<Task> tasks) {
+                        notSortedList = tasks;
                         list.clear();
-                        list.addAll(tasks);
+                        list.addAll(0,tasks);
+                        Collections.reverse(list);
                         adapter.notifyDataSetChanged();
                     }
                 });
-    }
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == RESULT_OK && requestCode == 100) {
-//            Task task = (Task) data.getSerializableExtra("task");
-//            Log.e("TAG", "task = " + task.getTitle());
-//            Log.e("TAG", "desc = " + task.getDesc());
-//        }
-//    }
 
-
-//    @Override
-//    public void itemLongClick(final int position) {
-//        list.get(position);
-//        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-//        builder.setTitle("Do you want to delete?")
-//                .setMessage("Delete")
-//                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        dialog.cancel();
-//                    }
-//                }).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                App.getDatabase().taskDao().delete(list.get(position));
-//            }
-//        }).show();
-//    }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    @Override
-    public void itemClick(int position) {
-        pos = position;
-        Intent intent = new Intent(getActivity(), FormActivity.class);
-        intent.putExtra("task", list.get(position));
-        Objects.requireNonNull(getActivity()).startActivityForResult(intent, 42);
-    }
-
-    @Override
-    public void itemLongClick(final int position) {
-        list.get(position);
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Do you want to delete?")
-                .setMessage("Delete")
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                }).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        App.getDatabase().taskDao().getSortedList().observe(getActivity(), new Observer<List<Task>>() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                App.getDatabase().taskDao().delete(list.get(position));
+            public void onChanged(List<Task> tasks) {
+                sortedList = tasks;
+
             }
-        }).show();
+        });
+
+    }
+
+
+        public static void setNotSortedList () {
+            list.clear();
+            list.addAll(notSortedList);
+            adapter.notifyDataSetChanged();
+
+        }
+
+
+    public static void setSortedList() {
+        list.clear();
+        list.addAll(sortedList);
+        adapter.notifyDataSetChanged();
     }
 }

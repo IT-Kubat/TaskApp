@@ -1,9 +1,11 @@
 package com.example.taskapp.ui.home;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     private ArrayList <Task> list;
     private OnItemClickListener onItemClickListener;
+
 
     public void setList(List<Task> list) {
         this.list = (ArrayList<Task>) list;
@@ -43,13 +46,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(list.get(position));
-        holder.setIsRecyclable(true);
-        if (position % 2 == 1) {
-            holder.itemView.setBackgroundResource(R.color.colorWhite);
+        if (position % 2 == 0) {
+            holder.layout.setBackgroundColor(Color.LTGRAY);
         } else {
-            holder.itemView.setBackgroundResource(R.color.colorGrey);
+            holder.layout.setBackgroundColor(Color.WHITE);
         }
+        holder.bind(list.get(position));
     }
 
 
@@ -60,13 +62,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView textTitle;
-        private TextView textDesc;
+        private TextView textTitle,textDesc;
+        private LinearLayout layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textTitle = itemView.findViewById(R.id.textTitle);
             textDesc = itemView.findViewById(R.id.textDesc);
+            layout = itemView.findViewById(R.id.layout);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -84,6 +87,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
         public void bind(Task task) {
             textTitle.setText(task.getTitle());
+            textDesc.setText(task.getDesc());
         }
     }
 }

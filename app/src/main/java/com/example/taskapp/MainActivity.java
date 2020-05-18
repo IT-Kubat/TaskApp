@@ -31,11 +31,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.IllegalFormatCodePointException;
+import java.util.List;
 import java.util.prefs.Preferences;
+
+import static com.example.taskapp.ui.home.HomeFragment.setNotSortedList;
+import static com.example.taskapp.ui.home.HomeFragment.setSortedList;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    Task task;
+    private boolean sort;
 
 
     @Override
@@ -83,12 +90,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_exit) {
             startActivity(new Intent(getApplicationContext(), OnBoardActivity.class));
             finish();
         }
+        if (item.getItemId() == R.id.btn_sort) {
+            if (!sort) {
+                setSortedList();
+                sort = true;
+            } else {
+                setNotSortedList();
+                sort = false;
+            }
+        }
+
         return super.onOptionsItemSelected(item);
 
     }
@@ -111,6 +127,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        fragment.getChildFragmentManager().getFragments().get(0).onActivityResult(requestCode,resultCode,data);
+        fragment.getChildFragmentManager().getFragments().get(0).onActivityResult(requestCode, resultCode, data);
     }
 }
