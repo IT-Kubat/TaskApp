@@ -34,19 +34,11 @@ public class HomeFragment extends Fragment {
     private static TaskAdapter adapter;
     private static ArrayList<Task> list = new ArrayList<>();
     private static List<Task> sortedList;
-    private static List<Task> list1;
     private static List<Task> notSortedList;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-//        App.getDatabase().taskDao().getSortedList().observe(getActivity(), new Observer<List<Task>>() {
-//            @Override
-//            public void onChanged(List<Task> tasks) {
-//                sortedList = tasks;
-//            }
-//        });
-
         return inflater.inflate(R.layout.fragment_home, container, false);
 
 
@@ -60,8 +52,6 @@ public class HomeFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new TaskAdapter(list);
-
-
 
 
         adapter.setOnItemClickListener(new OnItemClickListener() {
@@ -98,7 +88,6 @@ public class HomeFragment extends Fragment {
     }
 
 
-
     public void loadData() {
         App.getInstance()
                 .getDatabase()
@@ -109,7 +98,7 @@ public class HomeFragment extends Fragment {
                     public void onChanged(List<Task> tasks) {
                         notSortedList = tasks;
                         list.clear();
-                        list.addAll(0,tasks);
+                        list.addAll(0, tasks);
                         Collections.reverse(list);
                         adapter.notifyDataSetChanged();
                     }
@@ -126,12 +115,12 @@ public class HomeFragment extends Fragment {
     }
 
 
-        public static void setNotSortedList () {
-            list.clear();
-            list.addAll(notSortedList);
-            adapter.notifyDataSetChanged();
+    public static void setNotSortedList() {
+        list.clear();
+        list.addAll(notSortedList);
+        adapter.notifyDataSetChanged();
 
-        }
+    }
 
 
     public static void setSortedList() {

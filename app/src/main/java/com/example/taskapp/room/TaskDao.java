@@ -21,7 +21,7 @@ public interface TaskDao {
     LiveData<List<Task>> getAllLive();
 
 
-    @Query("SELECT * FROM task ORDER BY title ")
+    @Query("SELECT * FROM task ORDER BY title ASC")
     LiveData<List<Task>> getSortedList();
 
     @Insert

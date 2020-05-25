@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="32dp"
+    tools:context=".login.PhoneActivity">
+
+    <LinearLayout
+        android:id="@+id/first_screen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            style="@style/EditTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+996"
+            android:textSize="18dp"
+            android:layout_marginLeft="1dp"/>
+
+    <EditText
+        android:id="@+id/editPhone"
+        style="@style/EditTextStyle"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="Enter your number"
+        android:inputType="phone"
+        android:layout_marginLeft="1dp"
+        />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:background="@drawable/button_rounded"
+        android:onClick="onClick"
+        android:layout_marginLeft="2dp"/>
+
+
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/second_screen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:visibility="invisible">
+
+        <EditText
+            android:id="@+id/editCode"
+            style="@style/EditTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter SMS Code" />
+
+        <Button
+            android:id="@+id/btn_OK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onCodeClick"
+            android:text="OK"
+            android:background="@drawable/button_rounded" />
+    </LinearLayout>
+</LinearLayout>
