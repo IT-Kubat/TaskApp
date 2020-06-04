@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -28,14 +29,18 @@ import java.util.concurrent.TimeUnit;
 import static com.example.taskapp.R.id.our_work;
 import static com.example.taskapp.R.id.stay_home;
 
-//        1. Нужно добавить окно для ввода кода из смс (другой edittext и button)
-//        2. Показать это окно если была отправлена смска
-//        3. Добавить +996 для ввода (не стираемый)
-//        4. Дизайн
+//      1. Добавить imageView в ProfileActivity, по нажатию открыть галерею телефона, выбрать картинку и поставить в imageView
+//
+//      2. В FormActivity кроме записи в Room, отправлять еще и в Firestore. (без редактирования)
+//
+//      3. Добавить еще один фрагмент "Firestore"
+
+
 public class PhoneActivity extends AppCompatActivity {
 
     private EditText editPhone;
     private EditText editCode;
+    private TextView textCode;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks callbacks;
     String codeFromInternet;
     LinearLayout numberField;
@@ -48,6 +53,7 @@ public class PhoneActivity extends AppCompatActivity {
         setContentView(R.layout.activity_phone);
         editPhone = findViewById(R.id.editPhone);
         editCode = findViewById(R.id.editCode);
+        textCode = findViewById(R.id.textCode);
         numberCode = findViewById(R.id.second_screen);
         numberField = findViewById(R.id.first_screen);
         callbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -93,7 +99,7 @@ public class PhoneActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        String phone = editPhone.getText().toString().trim();
+        String phone = textCode.getText().toString() + editPhone.getText().toString().trim();
         if (phone == null) {
             editPhone.setError("Phone number is required");
             editPhone.requestFocus();
